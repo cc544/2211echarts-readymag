@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ECharts</title>
+  <!-- 国内加速 CDN，替换原示例的 CDN 提升加载速度 -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+  <style>
+    /* 关键：消除所有边距、占满容器、隐藏滚动条 */
+    * {margin:0;padding:0;box-sizing:border-box}
+    html,body {width:100%;height:100%;overflow:hidden;background:transparent}
+    #main {width:100%;height:100%}
+  </style>
+</head>
+<body>
+<div id="main"></div>
+<script>
+// 获取容器
+const chartDom = document.getElementById('main');
+// 初始化 ECharts
+const myChart = echarts.init(chartDom);
+// 替换成你的图表配置（比如政策扶持数据的 option）
+const option = {
+  backgroundColor: 'transparent',
+  title: {
+    text: '政策落地扶持数据',
+    left: 'center',
+    textStyle: { fontSize: 18, color: '#333', fontWeight: 500 }
+  },
+  tooltip: { trigger: 'item', formatter: '{b}<br/>{c}' },
+  grid: { left: '8%', right: '8%', bottom: '18%', containLabel: true },
+  xAxis: {
+    type: 'category',
+    data: ['2025', '2026', '2027'],
+    axisTick: { alignWithLabel: true },
+    axisLine: { lineStyle: { color: '#eee' } },
+    axisLabel: { fontSize: 12, color: '#555' }
+  },
+  yAxis: {
+    type: 'value',
+    name: '政策扶持力度指数',
+    splitLine: { lineStyle: { color: '#f0f0f0', type: 'dashed' } },
+    axisLine: { show: false },
+    axisTick: { show: false }
+  },
+  series: [
+    {
+      name: '三年行动方案推进',
+      type: 'line',
+      smooth: false,
+      symbol: 'circle',
+      symbolSize: 10,
+      data: [
+        { value: 40, name: '方案正式启动' },
+        { value: 72, name: '增值税减免政策全面落地' },
+        { value: 95, name: '规上企业1.5%吸纳考核全覆盖' }
+      ],
+      lineStyle: { color: '#d84c40', width: 3 },
+      itemStyle: { color: '#d84c40' },
+      areaStyle: {
+        color: new echarts.graphic.LinearGradient(0,0,0,1,[
+          {offset:0, color:'rgba(216,76,64,0.3)'},
+          {offset:1, color:'rgba(216,76,64,0.03)'}
+        ])
+      },
+      label: { show: true, position: 'top', fontSize: 11, color: '#333' }
+    }
+  ],
+  graphic: [
+    {
+      type: 'text',
+      left: 'center',
+      bottom: '3%',
+      style: { fill: '#555', fontSize: 11, textAlign: 'center' },
+      text: '2025-2027《促进残疾人就业三年行动方案》：规上企业残障员工吸纳比例≥1.5%，吸纳听障毕业生企业每人每年最高减免增值税3.6万元'
+    }
+  ]
+};
+// 挂载配置
+myChart.setOption(option);
+// 自适应缩放（iframe 大小变化时生效）
+window.addEventListener('resize', ()=>myChart.resize())
+</script>
+</body>
+</html>
